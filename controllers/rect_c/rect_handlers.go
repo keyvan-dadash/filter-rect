@@ -78,6 +78,12 @@ func HandleGetAllRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 			c.JSON(http.StatusOK, gin.H{})
 		}
 
-		c.JSON(http.StatusOK, allrects)
+		var rectsResponse []RectangleResponse
+
+		for _, rect := range allrects {
+			rectsResponse = append(rectsResponse, ConvertRectangleToRectangleResponse(&rect))
+		}
+
+		c.JSON(http.StatusOK, rectsResponse)
 	}
 }
