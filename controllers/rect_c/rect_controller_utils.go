@@ -1,17 +1,15 @@
 package rect_c
 
 import (
-	"time"
-
 	"github.com/sod-lol/filter-rect/core/models/rect_model"
 )
 
 type RectangleResponse struct {
-	X      int64     `json:"x"`
-	Y      int64     `json:"y"`
-	Width  int64     `json:"width"`
-	Height int64     `json:"height"`
-	Time   time.Time `json:"time"`
+	X      int64  `json:"x"`
+	Y      int64  `json:"y"`
+	Width  int64  `json:"width"`
+	Height int64  `json:"height"`
+	Time   string `json:"time"`
 }
 
 func ConvertRectangleToRectangleResponse(rect *rect_model.Rectangle) RectangleResponse {
@@ -20,6 +18,6 @@ func ConvertRectangleToRectangleResponse(rect *rect_model.Rectangle) RectangleRe
 		Y:      rect.Y,
 		Width:  rect.Width,
 		Height: rect.Height,
-		Time:   rect.CreatedAt,
+		Time:   rect.CreatedAt.Format("RFC1123Z"),
 	}
 }
