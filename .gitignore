@@ -1,0 +1,11 @@
+
+
+
+
+
+#env files
+*.env
+
+
+#data folder
+data/

@@ -7,10 +7,28 @@ services:
         context: .
         dockerfile: Dockerfile
     ports:
-        - 8080:8080
+        - 18080:8080
     restart: on-failure
+    env_file:
+      - frect.env
     networks:
         - backend
+
+  postgres:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+        - POSTGRES_DB=frect
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+        - '10438:5432'
+    volumes: 
+        - ./data:/var/lib/postgresql/data:z
+    networks:
+        - backend
+
 
 networks: 
   backend:

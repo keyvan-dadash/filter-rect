@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"github.com/sod-lol/filter-rect/controllers/rect_c"
 	"github.com/sod-lol/filter-rect/core/repos/rect_repo"
 )
 
@@ -16,7 +17,6 @@ func SetUpUrlRoutes(ctx context.Context, g *gin.RouterGroup) {
 		logrus.Fatalf("[FATAL] context does not have URL Repo")
 	}
 
-	// g.POST("/submit", url_c.HandlerShortURLRequest(urlRepo))
-	// g.GET("/:shortUrl", url_c.HandlerRedirect(urlRepo))
-	// g.GET("/info/:shortUrl", url_c.HandlerShortURLInformation(urlRepo))
+	g.POST("/", rect_c.HandleAddRectangles(rect_repo))
+	g.GET("/", rect_c.HandleGetAllRectangles(rect_repo))
 }

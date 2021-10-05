@@ -1,6 +1,7 @@
 package rect_c
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,7 @@ type rectangleReq struct {
 
 type rectanglesPostReq struct {
 	Main   rectangleReq   `binding:"required" json:"main"`
-	Inputs []rectangleReq `binding:"required" json:"Inputs"`
+	Inputs []rectangleReq `binding:"required" json:"inputs"`
 }
 
 //POST
@@ -31,6 +32,8 @@ func HandleAddRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+
+		fmt.Println(rectReq)
 
 		ctx := c.Request.Context()
 		mainRect := rect_model.CreateRectangle(rectReq.Main.X, rectReq.Main.Y, rectReq.Main.Width, rectReq.Main.Height)
@@ -46,13 +49,17 @@ func HandleAddRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 
 		}
 
+		fmt.Println(validRects)
+
 		for _, rect := range validRects {
 			err := rectRepo.SaveRectangle(ctx, rect)
-			logrus.Errorf("[ERROR] cannot save rectangle to database. error: %s", err)
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": "try again later",
-			})
-			return
+			if err != nil {
+				logrus.Errorf("[ERROR] cannot save rectangle to database. error: %s", err)
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error": "try again later",
+				})
+				return
+			}
 		}
 
 		c.JSON(http.StatusCreated, gin.H{})
@@ -66,6 +73,10 @@ func HandleGetAllRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 		ctx := c.Request.Context()
 
 		allrects := rectRepo.GetAllRect(ctx)
+
+		if allrects == nil {
+			c.JSON(http.StatusOK, gin.H{})
+		}
 
 		c.JSON(http.StatusOK, allrects)
 	}

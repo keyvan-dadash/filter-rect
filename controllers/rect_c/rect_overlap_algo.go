@@ -9,24 +9,24 @@ type point struct {
 
 func IsRectangleOverlap(rect1 *rect_model.Rectangle, rect2 *rect_model.Rectangle) bool {
 
-	rect1_topleft := point{
+	rect1_bottomright := point{
 		x: rect1.X,
 		y: rect1.Y,
 	}
 
-	rect1_bottomright := point{
-		x: rect1.X + rect1.Height,
-		y: rect1.Y + rect1.Width,
+	rect1_topleft := point{
+		x: rect1.X - rect1.Width,
+		y: rect1.Y + rect1.Height,
 	}
 
-	rect2_topleft := point{
+	rect2_bottomright := point{
 		x: rect2.X,
 		y: rect2.Y,
 	}
 
-	rect2_bottomright := point{
-		x: rect2.X + rect2.Height,
-		y: rect2.Y + rect2.Width,
+	rect2_topleft := point{
+		x: rect2.X - rect2.Width,
+		y: rect2.Y + rect2.Height,
 	}
 
 	if rect1_topleft.x == rect1_bottomright.x ||

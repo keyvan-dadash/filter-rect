@@ -27,6 +27,10 @@ type RectangleRepo interface {
 }
 */
 
+func (rpd *RectanglePostgresDB) SetDB(ctx context.Context, db *gorm.DB) {
+	rpd.db = db
+}
+
 func (rpd *RectanglePostgresDB) GetRectByID(ctx context.Context, Id string) *rect_model.Rectangle {
 
 	rect := new(rect_model.Rectangle)
@@ -40,7 +44,11 @@ func (rpd *RectanglePostgresDB) GetAllRect(ctx context.Context) []rect_model.Rec
 
 	var rects []rect_model.Rectangle
 
-	rpd.db.Find(&rects)
+	result := rpd.db.Find(&rects)
+
+	if result.Error != nil {
+		logrus.Errorf("[ERROR] Get all rectangles failed with err %v\n", result.Error)
+	}
 
 	return rects
 }
