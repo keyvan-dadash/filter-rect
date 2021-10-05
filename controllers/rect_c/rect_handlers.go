@@ -11,10 +11,10 @@ import (
 )
 
 type rectangleReq struct {
-	X      int64 `json:"x"`
-	Y      int64 `json:"y"`
-	Width  int64 `json:"width"`
-	Height int64 `json:"height"`
+	X      *int64 `binding:"required" json:"x"`
+	Y      *int64 `binding:"required" json:"y"`
+	Width  *int64 `binding:"required" json:"width"`
+	Height *int64 `binding:"required" json:"height"`
 }
 
 type rectanglesPostReq struct {
@@ -36,11 +36,18 @@ func HandleAddRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 		fmt.Println(rectReq)
 
 		ctx := c.Request.Context()
-		mainRect := rect_model.CreateRectangle(rectReq.Main.X, rectReq.Main.Y, rectReq.Main.Width, rectReq.Main.Height)
+		mainRect := rect_model.CreateRectangle(*(rectReq.Main.X), *(rectReq.Main.Y), *(rectReq.Main.Width), *(rectReq.Main.Height))
 
 		var validRects []*rect_model.Rectangle
 		for _, input := range rectReq.Inputs {
-			inputRect := rect_model.CreateRectangle(input.X, input.Y, input.Width, input.Height)
+			if !ValidateRectangleRequest(input) {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "invalid request",
+				})
+				return
+			}
+
+			inputRect := rect_model.CreateRectangle(*(input.X), *(input.Y), *(input.Width), *(input.Height))
 			hasOverlap := IsRectangleOverlap(mainRect, inputRect)
 
 			if hasOverlap {
@@ -82,6 +89,10 @@ func HandleGetAllRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 
 		for _, rect := range allrects {
 			rectsResponse = append(rectsResponse, ConvertRectangleToRectangleResponse(&rect))
+		}
+
+		if rectsResponse == nil || len(rectsResponse) == 0 {
+			c.JSON(http.StatusOK, gin.H{})
 		}
 
 		c.JSON(http.StatusOK, rectsResponse)

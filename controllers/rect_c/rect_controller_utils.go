@@ -1,6 +1,8 @@
 package rect_c
 
 import (
+	"time"
+
 	"github.com/sod-lol/filter-rect/core/models/rect_model"
 )
 
@@ -18,6 +20,10 @@ func ConvertRectangleToRectangleResponse(rect *rect_model.Rectangle) RectangleRe
 		Y:      rect.Y,
 		Width:  rect.Width,
 		Height: rect.Height,
-		Time:   rect.CreatedAt.Format("RFC1123Z"),
+		Time:   rect.CreatedAt.Format(time.RFC1123Z),
 	}
+}
+
+func ValidateRectangleRequest(recReq rectangleReq) bool {
+	return (recReq.X != nil) && (recReq.Y != nil) && (recReq.Width != nil) && (recReq.Height != nil)
 }

@@ -36,13 +36,13 @@ func IsRectangleOverlap(rect1 *rect_model.Rectangle, rect2 *rect_model.Rectangle
 		return false
 	}
 
-	if rect1_topleft.x >= rect2_bottomright.x ||
-		rect2_topleft.x >= rect1_bottomright.x {
+	if rect1_topleft.x > rect2_bottomright.x ||
+		rect2_topleft.x > rect1_bottomright.x {
 		return false
 	}
 
-	if rect1_bottomright.y >= rect2_topleft.y ||
-		rect2_bottomright.y >= rect1_topleft.y {
+	if rect1_bottomright.y > rect2_topleft.y ||
+		rect2_bottomright.y > rect1_topleft.y {
 		return false
 	}
 
