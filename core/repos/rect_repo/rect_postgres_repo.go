@@ -92,3 +92,7 @@ func (rpd *RectanglePostgresDB) DeleteRectangleByID(ctx context.Context, Id stri
 	return result.Error
 
 }
+
+func (rpd *RectanglePostgresDB) DeleteAllRectangle(tx context.Context) {
+	rpd.db.Session(&gorm.Session{AllowGlobalUpdate: true}).Delete(&rect_model.Rectangle{})
+}

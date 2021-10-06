@@ -18,4 +18,5 @@ type RectangleRepo interface {
 	SaveRectangle(ctx context.Context, rect *rect_model.Rectangle) error
 	UpdateRectangle(ctx context.Context, rect *rect_model.Rectangle) error
 	DeleteRectangleByID(ctx context.Context, Id string) error
+	DeleteAllRectangle(tx context.Context)
 }

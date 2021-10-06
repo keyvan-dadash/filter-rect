@@ -12,8 +12,8 @@ func TestCreatingRect(t *testing.T) {
 
 	rectObj := rect_model.CreateRectangle(4, 5, 10, 15)
 
-	assert.Equal(rectObj.X, 4)
-	assert.Equal(rectObj.Y, 5)
-	assert.Equal(rectObj.Width, 10)
-	assert.Equal(rectObj.Height, 15)
+	assert.Equal(rectObj.X, int64(4))
+	assert.Equal(rectObj.Y, int64(5))
+	assert.Equal(rectObj.Width, int64(10))
+	assert.Equal(rectObj.Height, int64(15))
 }
