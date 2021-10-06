@@ -9,12 +9,12 @@ import (
 	"github.com/sod-lol/filter-rect/core/repos/rect_repo"
 )
 
-//SetUpUrlRoutes for URL shortner app
+//SetUpUrlRoutes for Rect filtering app
 func SetUpUrlRoutes(ctx context.Context, g *gin.RouterGroup) {
 
 	rect_repo, hasUrlRepo := rect_repo.GetRectangleRepoFromContex(ctx)
 	if !hasUrlRepo {
-		logrus.Fatalf("[FATAL] context does not have URL Repo")
+		logrus.Fatalf("[FATAL] context does not have Rect Repo")
 	}
 
 	g.POST("/", rect_c.HandleAddRectangles(rect_repo))

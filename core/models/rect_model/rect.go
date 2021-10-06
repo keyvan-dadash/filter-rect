@@ -6,6 +6,8 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+//Rectangle
+//model that will store inside database
 type Rectangle struct {
 	Id        string
 	X         int64
@@ -15,6 +17,8 @@ type Rectangle struct {
 	CreatedAt time.Time
 }
 
+//CreateRectangle
+//utility for creation of Rectangle
 func CreateRectangle(x int64, y int64, w int64, h int64) *Rectangle {
 
 	return &Rectangle{

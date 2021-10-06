@@ -7,6 +7,9 @@ type point struct {
 	y int64
 }
 
+//IsRectangleOverlap
+//it will take 2 rectangle and return true if two rectangle has overlap
+//and false otherwise
 func IsRectangleOverlap(rect1 *rect_model.Rectangle, rect2 *rect_model.Rectangle) bool {
 
 	rect1_bottomright := point{
