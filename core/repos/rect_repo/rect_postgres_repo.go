@@ -8,6 +8,8 @@ import (
 	"gorm.io/gorm"
 )
 
+//RectanglePostgresDB
+//struct for sumbit transaction to postgres db
 type RectanglePostgresDB struct {
 	db *gorm.DB
 }
