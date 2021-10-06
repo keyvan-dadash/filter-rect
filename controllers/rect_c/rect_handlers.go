@@ -1,7 +1,6 @@
 package rect_c
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,8 +32,6 @@ func HandleAddRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 			return
 		}
 
-		fmt.Println(rectReq)
-
 		ctx := c.Request.Context()
 		mainRect := rect_model.CreateRectangle(*(rectReq.Main.X), *(rectReq.Main.Y), *(rectReq.Main.Width), *(rectReq.Main.Height))
 
@@ -55,8 +52,6 @@ func HandleAddRectangles(rectRepo rect_repo.RectangleRepo) gin.HandlerFunc {
 			}
 
 		}
-
-		fmt.Println(validRects)
 
 		for _, rect := range validRects {
 			err := rectRepo.SaveRectangle(ctx, rect)
